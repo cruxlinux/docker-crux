@@ -9,26 +9,19 @@ die () {
 
 download()
 {
-    echo "Downloading ${URL} ..."
-    curl -q ${URL} -o $(basename ${URL})
+    echo "Downloading ${IMG_URL} ..."
+    curl -q ${IMG_URL} -o $(basename ${IMG_URL})
 }
 
 mkrootfsfromiso()
 {
-    ISO=$(basename ${URL})
-
     # Make sure the downloaded file exists
-    if [ ! -e ${ISO} ]; then
-	echo "${ISO} doesn't exist"
-    fi
-
-    # Ensure the downloaded file is an ISO file
-    if ! ls | grep *.iso$ > /dev/null; then
-	echo "No ISO found"
+    if [ ! -e ${IMG_FILENAME} ]; then
+	echo "${IMG_FILENAME} doesn't exist"
     fi
 
     # Mount the ISO
-    mount -o ro,loop ${ISO} ${CRUX}
+    mount -r -o loop ${IMG_FILENAME} ${CRUX}
 
     # Extract pkgutils
     tar -C ${TMP} -xf ${CRUX}/tools/pkgutils#*.pkg.tar.gz

@@ -9,8 +9,8 @@ die () {
 
 download()
 {
-    echo "Downloading ${URL} ..."
-    curl -q ${URL} -o rootfs.tar.xz
+    echo "Downloading ${IMG_URL} ..."
+    curl -q ${IMG_URL} -o rootfs.tar.xz
 }
 
 repackage()

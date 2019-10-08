@@ -47,15 +47,6 @@ fetchversion()
 
 buildrootfs()
 {
-	case "${ARCH}" in
-		x86_64)
-			URL="http://ftp.morpheus.net/pub/linux/crux/crux-${VERSION}/iso/crux-${VERSION}.iso"
-			;;
-	aarch64)
-			URL="http://resources.crux-arm.nu/releases/${VERSION}/crux-arm-rootfs-${VERSION}-aarch64.tar.xz"
-			;;
-	esac
-
 	if docker ps -a | grep -q cruxbuild; then
 		docker rm -f cruxbuild > /dev/null
 	fi
@@ -65,7 +56,8 @@ buildrootfs()
 	docker run \
 		-i -t --privileged \
 		--name cruxbuild \
-		-e URL=${URL} \
+		-e IMG_FILENAME=${IMG_FILENAME} \
+		-e IMG_URL=${IMG_URL} \
 		-e VERSION=${VERSION} \
 		cruxbuild
 
